@@ -101,7 +101,7 @@ def load_mixed(mixed=(load_B, load_BUS, load_BUSI)):
     return np.concatenate(all_X), np.concatenate(all_y)
 
 
-TRANS = T.Compose([T.Resize(224, 224), T.ToTensor()])
+TRANS = T.Compose([T.Resize((224, 224)), T.ToTensor()])
 
 DEBUG = int(os.environ.get('DEBUG', 0))
 
