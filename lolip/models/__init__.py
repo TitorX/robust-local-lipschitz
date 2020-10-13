@@ -14,6 +14,7 @@ def get_hyper(name, loss, arch, dataset_name):
         ret['epochs'] = 50
         ret['learning_rate'] = 1e-4
         ret['momentum'] = 0.9
+        ret['batch_size'] = 8
 
     elif 'CNN' in arch and ('mnist' in dataset_name or 'fashion' in dataset_name):
         ret['epochs'] = 160
