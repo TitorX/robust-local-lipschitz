@@ -101,6 +101,8 @@ def load_mixed(mixed=(load_B, load_BUS, load_BUSI)):
     return np.concatenate(all_X), np.concatenate(all_y)
 
 
+TRANS = T.Compose([T.Resize(224, 224), T.ToTensor()])
+
 DEBUG = int(os.environ.get('DEBUG', 0))
 
 class DatasetVarClass(VariableClass, metaclass=RegisteringChoiceType):
@@ -112,7 +114,7 @@ class DatasetVarClass(VariableClass, metaclass=RegisteringChoiceType):
     def b(auto_var, var_value, inter_var):
         X, y = load_B()
         loader = DataLoader(
-            ImgSet(X, y, T.ToTensor()),
+            ImgSet(X, y, TRANS,
             batch_size=len(X)
         )
         X, y = next(iter(loader))
@@ -128,7 +130,7 @@ class DatasetVarClass(VariableClass, metaclass=RegisteringChoiceType):
     def bus(auto_var, var_value, inter_var):
         X, y = load_BUS()
         loader = DataLoader(
-            ImgSet(X, y, T.ToTensor()),
+            ImgSet(X, y, TRANS,
             batch_size=len(X)
         )
         X, y = next(iter(loader))
@@ -144,7 +146,7 @@ class DatasetVarClass(VariableClass, metaclass=RegisteringChoiceType):
     def busi(auto_var, var_value, inter_var):
         X, y = load_BUSI()
         loader = DataLoader(
-            ImgSet(X, y, T.ToTensor()),
+            ImgSet(X, y, TRANS,
             batch_size=len(X)
         )
         X, y = next(iter(loader))
@@ -160,7 +162,7 @@ class DatasetVarClass(VariableClass, metaclass=RegisteringChoiceType):
     def mixed(auto_var, var_value, inter_var):
         X, y = load_mixed()
         loader = DataLoader(
-            ImgSet(X, y, T.ToTensor()),
+            ImgSet(X, y, TRANS,
             batch_size=len(X)
         )
         X, y = next(iter(loader))
