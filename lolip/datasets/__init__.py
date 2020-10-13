@@ -1,7 +1,7 @@
 import os
 
 import numpy as np
-import pandas as import pd
+import pandas as pd
 from PIL import Image
 import torchvision.transforms as transforms
 from torchvision.datasets import ImageFolder
