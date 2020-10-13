@@ -10,7 +10,12 @@ def get_hyper(name, loss, arch, dataset_name):
     ret = {}
     ret['optimizer'] = 'sgd'
 
-    if 'CNN' in arch and ('mnist' in dataset_name or 'fashion' in dataset_name):
+    if dataset_name in ['b', 'bus', 'busi', 'mixed']:
+        ret['epochs'] = 50
+        ret['learning_rate'] = 1e-4
+        ret['momentum'] = 0.9
+
+    elif 'CNN' in arch and ('mnist' in dataset_name or 'fashion' in dataset_name):
         ret['epochs'] = 160
         ret['learning_rate'] = 1e-4
         ret['momentum'] = 0.9
