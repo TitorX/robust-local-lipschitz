@@ -118,7 +118,7 @@ class DatasetVarClass(VariableClass, metaclass=RegisteringChoiceType):
             batch_size=len(X)
         )
         X, y = next(iter(loader))
-        X = X.permute(2, 0, 1).numpy()
+        X = X.permute(0, 2, 3, 1).numpy()
         y = y.numpy()
 
         x_train, x_test, y_train, y_test = train_test_split(
@@ -134,7 +134,7 @@ class DatasetVarClass(VariableClass, metaclass=RegisteringChoiceType):
             batch_size=len(X)
         )
         X, y = next(iter(loader))
-        X = X.permute(2, 0, 1).numpy()
+        X = X.permute(0, 2, 3, 1).numpy()
         y = y.numpy()
 
         x_train, x_test, y_train, y_test = train_test_split(
@@ -150,7 +150,7 @@ class DatasetVarClass(VariableClass, metaclass=RegisteringChoiceType):
             batch_size=len(X)
         )
         X, y = next(iter(loader))
-        X = X.permute(2, 0, 1).numpy()
+        X = X.permute(0, 2, 3, 1).numpy()
         y = y.numpy()
 
         x_train, x_test, y_train, y_test = train_test_split(
@@ -166,7 +166,7 @@ class DatasetVarClass(VariableClass, metaclass=RegisteringChoiceType):
             batch_size=len(X)
         )
         X, y = next(iter(loader))
-        X = X.permute(2, 0, 1).numpy()
+        X = X.permute(0, 2, 3, 1).numpy()
         y = y.numpy()
 
         x_train, x_test, y_train, y_test = train_test_split(
