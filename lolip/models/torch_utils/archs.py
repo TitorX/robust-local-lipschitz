@@ -33,11 +33,11 @@ class Model(nn.Module):
 def ResNet101(n_classes, n_channels):
     return resnet101(pretrained=False, n_channels=n_channels, num_classes=n_classes)
 
-def ResNet50_drop20(n_classes, n_channels):
+def ResNet50drop20(n_classes, n_channels):
     return Model('resnet50', n_classes, 0.2)
     # return resnet50_drop20(pretrained=False, n_channels=n_channels, num_classes=n_classes)
 
-def ResNet50_drop50(n_classes, n_channels):
+def ResNet50drop50(n_classes, n_channels):
     return Model('resnet50', n_classes, 0.5)
     # return resnet50_drop50(pretrained=False, n_channels=n_channels, num_classes=n_classes)
 
