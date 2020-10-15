@@ -21,10 +21,10 @@ class Model(nn.Module):
         if dropout is None:
             self.net.last_linear = last_linear
         else:
-            self.net.last_linear = nn.Sequential([
+            self.net.last_linear = nn.Sequential(
                 nn.Dropout(dropout),
                 last_linear
-            ])
+            )
 
     def forward(self, X):
         return self.net(X)
