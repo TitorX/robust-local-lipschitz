@@ -9,13 +9,22 @@ from .resnet import resnet50, resnet152, resnet101, resnet50_drop50, resnet50_dr
 
 
 class Model(nn.Module):
-    def __init__(self, model_arch, n_classes):
+    def __init__(self, model_arch, n_classes, dropout=None):
         super().__init__()
 
         model = getattr(pretrainedmodels, model_arch)
         self.net = model(num_classes=1000, pretrained='imagenet')
-        self.net.last_linear = nn.Linear(
+
+        last_linear = nn.Linear(
             self.net.last_linear.in_features, n_classes)
+
+        if dropout is None:
+            self.net.last_linear = last_linear
+        else:
+            self.net.last_linear = nn.Sequential([
+                nn.Dropout(dropout),
+                last_linear
+            ])
 
     def forward(self, X):
         return self.net(X)
@@ -25,10 +34,12 @@ def ResNet101(n_classes, n_channels):
     return resnet101(pretrained=False, n_channels=n_channels, num_classes=n_classes)
 
 def ResNet50_drop20(n_classes, n_channels):
-    return resnet50_drop20(pretrained=False, n_channels=n_channels, num_classes=n_classes)
+    return Model('resnet50', n_classes, 0.2)
+    # return resnet50_drop20(pretrained=False, n_channels=n_channels, num_classes=n_classes)
 
 def ResNet50_drop50(n_classes, n_channels):
-    return resnet50_drop50(pretrained=False, n_channels=n_channels, num_classes=n_classes)
+    return Model('resnet50', n_classes, 0.5)
+    # return resnet50_drop50(pretrained=False, n_channels=n_channels, num_classes=n_classes)
 
 def ResNet50(n_classes, n_channels):
     return Model('resnet50', n_classes)
