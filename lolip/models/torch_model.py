@@ -244,7 +244,7 @@ class TorchModel(BaseEstimator):
                             callback_fn(self, x, y, loss_fn)
 
             current_lr = self.optimizer.state_dict()['param_groups'][0]['lr']
-            scheduler.step()
+            # scheduler.step()  # enable/disable scheduler
             self.start_epoch = epoch
 
             if (epoch - 1) % log_interval == 0:
