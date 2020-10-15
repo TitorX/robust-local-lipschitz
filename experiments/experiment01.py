@@ -55,16 +55,17 @@ def run_experiment01(auto_var):
     print(f"avg tst lip: {result['avg_tst_lip_1']}")
 
     for name in ['b', 'bus', 'busi']:
-        tX, ty = load_datasets(name)
+        with Stopwatch(f'Cross dataset validation {name}'):
+            tX, ty = load_datasets(name)
 
-        result[f'cross_val_{name}_acc'] = (model.predict(tX) == ty).mean()
+            result[f'cross_val_{name}_acc'] = (model.predict(tX) == ty).mean()
 
-        adv_tX = attack_model.perturb(tX, ty)
-        result[f'cross_val_{name}_adv_acc'] = (model.predict(adv_tX) == ty).mean()
+            adv_tX = attack_model.perturb(tX, ty)
+            result[f'cross_val_{name}_adv_acc'] = (model.predict(adv_tX) == ty).mean()
 
-        t_lip, _ = estimate_local_lip_v2(model.model, tX, top_norm=1, btm_norm=norm,
-                                     epsilon=auto_var.get_var("eps"), device=device)
-        result[f'cross_val_{name}_avg_lip'] = t_lip
+            t_lip, _ = estimate_local_lip_v2(model.model, tX, top_norm=1, btm_norm=norm,
+                                        epsilon=auto_var.get_var("eps"), device=device)
+            result[f'cross_val_{name}_avg_lip'] = t_lip
 
     print(result)
     return result
