@@ -11,13 +11,13 @@ def ResNet101(n_classes, n_channels):
     return resnet101(pretrained=False, n_channels=n_channels, num_classes=n_classes)
 
 def ResNet50_drop20(n_classes, n_channels):
-    return resnet50_drop20(pretrained=False, n_channels=n_channels, num_classes=n_classes)
+    return resnet50_drop20(pretrained=True, n_channels=n_channels, num_classes=n_classes)
 
 def ResNet50_drop50(n_classes, n_channels):
-    return resnet50_drop50(pretrained=False, n_channels=n_channels, num_classes=n_classes)
+    return resnet50_drop50(pretrained=True, n_channels=n_channels, num_classes=n_classes)
 
 def ResNet50(n_classes, n_channels):
-    return resnet50(pretrained=False, n_channels=n_channels, num_classes=n_classes)
+    return resnet50(pretrained=True, n_channels=n_channels, num_classes=n_classes)
 
 def ResNet152(n_classes, n_channels):
     return resnet152(pretrained=False, n_channels=n_channels, num_classes=n_classes)
