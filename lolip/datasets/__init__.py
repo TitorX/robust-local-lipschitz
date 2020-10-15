@@ -103,8 +103,26 @@ def load_mixed(mixed=(load_B, load_BUS, load_BUSI)):
 
 
 TRANS = T.Compose([T.Resize((224, 224)), T.ToTensor()])
+LOADERS = {
+    'b': load_B, 'bus': load_BUS,
+    'busi': load_BUSI, 'mixed': load_mixed}
+
+
+def load_datasets(name):
+    X, y = LOADERS[name]()
+
+    loader = DataLoader(
+        ImgSet(X, y, TRANS),
+        batch_size=len(X)
+    )
+    X, y = next(iter(loader))
+    X = X.permute(0, 2, 3, 1).numpy()
+    y = y.numpy()
+    return X, y
+
 
 DEBUG = int(os.environ.get('DEBUG', 0))
+
 
 class DatasetVarClass(VariableClass, metaclass=RegisteringChoiceType):
     """Defines the dataset to use"""
@@ -113,14 +131,7 @@ class DatasetVarClass(VariableClass, metaclass=RegisteringChoiceType):
     @register_var(argument=r"b", shown_name="b")
     @staticmethod
     def b(auto_var, var_value, inter_var):
-        X, y = load_B()
-        loader = DataLoader(
-            ImgSet(X, y, TRANS),
-            batch_size=len(X)
-        )
-        X, y = next(iter(loader))
-        X = X.permute(0, 2, 3, 1).numpy()
-        y = y.numpy()
+        X, y = load_datasets('b')
 
         x_train, x_test, y_train, y_test = train_test_split(
             X, y, test_size=0.2, random_state=11)
@@ -129,14 +140,7 @@ class DatasetVarClass(VariableClass, metaclass=RegisteringChoiceType):
     @register_var(argument=r"bus", shown_name="bus")
     @staticmethod
     def bus(auto_var, var_value, inter_var):
-        X, y = load_BUS()
-        loader = DataLoader(
-            ImgSet(X, y, TRANS),
-            batch_size=len(X)
-        )
-        X, y = next(iter(loader))
-        X = X.permute(0, 2, 3, 1).numpy()
-        y = y.numpy()
+        X, y = load_datasets('bus')
 
         x_train, x_test, y_train, y_test = train_test_split(
             X, y, test_size=0.2, random_state=11)
@@ -145,14 +149,8 @@ class DatasetVarClass(VariableClass, metaclass=RegisteringChoiceType):
     @register_var(argument=r"busi", shown_name="busi")
     @staticmethod
     def busi(auto_var, var_value, inter_var):
-        X, y = load_BUSI()
-        loader = DataLoader(
-            ImgSet(X, y, TRANS),
-            batch_size=len(X)
-        )
-        X, y = next(iter(loader))
-        X = X.permute(0, 2, 3, 1).numpy()
-        y = y.numpy()
+        X, y = load_datasets('busi')
+
 
         x_train, x_test, y_train, y_test = train_test_split(
             X, y, test_size=0.2, random_state=11)
@@ -161,14 +159,7 @@ class DatasetVarClass(VariableClass, metaclass=RegisteringChoiceType):
     @register_var(argument=r"mixed", shown_name="mixed")
     @staticmethod
     def mixed(auto_var, var_value, inter_var):
-        X, y = load_mixed()
-        loader = DataLoader(
-            ImgSet(X, y, TRANS),
-            batch_size=len(X)
-        )
-        X, y = next(iter(loader))
-        X = X.permute(0, 2, 3, 1).numpy()
-        y = y.numpy()
+        X, y = load_datasets('mixed')
 
         x_train, x_test, y_train, y_test = train_test_split(
             X, y, test_size=0.2, random_state=11)
