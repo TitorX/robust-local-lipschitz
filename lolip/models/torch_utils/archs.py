@@ -3,21 +3,36 @@ from collections import OrderedDict
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-
+import pretrainedmodels
 from .wideresnet import *
 from .resnet import resnet50, resnet152, resnet101, resnet50_drop50, resnet50_drop20
+
+
+class Model(nn.Module):
+    def __init__(self, model_arch, n_classes):
+        super().__init__()
+
+        model = getattr(pretrainedmodels, model_arch)
+        self.net = model(num_classes=1000, pretrained='imagenet')
+        self.net.last_linear = nn.Linear(
+            self.net.last_linear.in_features, n_classes)
+
+    def forward(self, X):
+        return self.net(X)
+
 
 def ResNet101(n_classes, n_channels):
     return resnet101(pretrained=False, n_channels=n_channels, num_classes=n_classes)
 
 def ResNet50_drop20(n_classes, n_channels):
-    return resnet50_drop20(pretrained=True, n_channels=n_channels, num_classes=n_classes)
+    return resnet50_drop20(pretrained=False, n_channels=n_channels, num_classes=n_classes)
 
 def ResNet50_drop50(n_classes, n_channels):
-    return resnet50_drop50(pretrained=True, n_channels=n_channels, num_classes=n_classes)
+    return resnet50_drop50(pretrained=False, n_channels=n_channels, num_classes=n_classes)
 
 def ResNet50(n_classes, n_channels):
-    return resnet50(pretrained=True, n_channels=n_channels, num_classes=n_classes)
+    return Model('resnet50', n_classes)
+    # return resnet50(pretrained=False, n_channels=n_channels, num_classes=n_classes)
 
 def ResNet152(n_classes, n_channels):
     return resnet152(pretrained=False, n_channels=n_channels, num_classes=n_classes)
