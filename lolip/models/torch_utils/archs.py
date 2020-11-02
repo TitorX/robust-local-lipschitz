@@ -31,22 +31,27 @@ class Model(nn.Module):
 
 
 def ResNet101(n_classes, n_channels):
-    return resnet101(pretrained=False, n_channels=n_channels, num_classes=n_classes)
+    return resnet101(pretrained=True, n_channels=n_channels, num_classes=n_classes)
+
 
 def ResNet50drop20(n_classes, n_channels):
-    return Model('resnet50', n_classes, 0.2)
-    # return resnet50_drop20(pretrained=False, n_channels=n_channels, num_classes=n_classes)
+    # return Model('resnet50', n_classes, 0.2)
+    return resnet50_drop20(pretrained=True, n_channels=n_channels, num_classes=n_classes)
+
 
 def ResNet50drop50(n_classes, n_channels):
-    return Model('resnet50', n_classes, 0.5)
-    # return resnet50_drop50(pretrained=False, n_channels=n_channels, num_classes=n_classes)
+    # return Model('resnet50', n_classes, 0.5)
+    return resnet50_drop50(pretrained=True, n_channels=n_channels, num_classes=n_classes)
+
 
 def ResNet50(n_classes, n_channels):
-    return Model('resnet50', n_classes)
-    # return resnet50(pretrained=False, n_channels=n_channels, num_classes=n_classes)
+    # return Model('resnet50', n_classes)
+    return resnet50(pretrained=True, n_channels=n_channels, num_classes=n_classes)
+
 
 def ResNet152(n_classes, n_channels):
     return resnet152(pretrained=False, n_channels=n_channels, num_classes=n_classes)
+
 
 class CNN001(nn.Module):
     def __init__(self, n_classes, n_channels=None):
@@ -71,6 +76,7 @@ class CNN001(nn.Module):
         x = self.fc2(x)
         #output = F.log_softmax(x, dim=1)
         return x
+
 
 class CNN002(nn.Module):
     """https://github.com/yaodongyu/TRADES/blob/e20f7b9b99c79ed3cf0d1bb12a47c229ebcac24a/models/small_cnn.py#L5"""
