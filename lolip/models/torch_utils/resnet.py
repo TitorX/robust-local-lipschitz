@@ -230,12 +230,15 @@ class ResNet(nn.Module):
         return self._forward_impl(x)
 
 
-def _resnet(arch, block, layers, pretrained, progress, **kwargs):
+def _resnet(arch, block, layers, pretrained, progress, num_classes=3, **kwargs):
     model = ResNet(block, layers, **kwargs)
     if pretrained:
         state_dict = load_state_dict_from_url(model_urls[arch],
                                               progress=progress)
         model.load_state_dict(state_dict)
+    if num_classes != 1000:
+        fc = nn.Linear(model.fc.in_features, num_classes)
+        model.fc = fc
     return model
 
 
